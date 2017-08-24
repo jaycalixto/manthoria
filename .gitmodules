@@ -1,0 +1,3 @@
+[submodule "Sources/mankha"]
+	path = Sources/mankha
+	url = https://github.com/jaycalixto/mankha.git
