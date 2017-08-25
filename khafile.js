@@ -1,4 +1,4 @@
-let project = new Project('New Project');
-project.addAssets('Assets/**');
+let project = new Project('Manthoria');
+project.addAssets('Assets/**', { nameBaseDir: 'Assets', destination: '{dir}/{name}', name: '{dir}/{name}' });
 project.addSources('Sources');
 resolve(project);

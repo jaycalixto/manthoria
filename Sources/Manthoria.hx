@@ -4,7 +4,11 @@ import kha.Framebuffer;
 import kha.Scheduler;
 import kha.System;
 
-class Project {
+class Manthoria {
+
+	public static inline var WIDTH = 960;
+	public static inline var HEIGHT = 480;
+
 	public function new() {
 		System.notifyOnRender(render);
 		Scheduler.addTimeTask(update, 0, 1 / 60);

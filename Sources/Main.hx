@@ -4,8 +4,14 @@ import kha.System;
 
 class Main {
 	public static function main() {
-		System.init({title: "Project", width: 1024, height: 768}, function () {
-			new Project();
+		var initializer = {
+			title: "Manthoria", 
+			width: Manthoria.WIDTH, 
+			height: Manthoria.HEIGHT
+		};
+		
+		System.init(initializer, function () {
+			new Manthoria();
 		});
 	}
 }
