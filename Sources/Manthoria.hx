@@ -6,6 +6,7 @@ import kha.System;
 import kha.Image;
 import kha.Color;
 import kha.Scaler;
+import config.Config;
 import scenes.IScene;
 import scenes.GameplayScreen;
 
@@ -13,6 +14,7 @@ class Manthoria {
 
 	public static inline var WIDTH = 960;
 	public static inline var HEIGHT = 480;
+	public static var config:Config;
 
 	private var backbuffer: Image;
 	private var scene: IScene;
@@ -21,13 +23,14 @@ class Manthoria {
 		System.notifyOnRender(render);
 		Scheduler.addTimeTask(update, 0, 1 / 60);
 
+		config = new Config();
+
 		backbuffer = Image.createRenderTarget(WIDTH, HEIGHT);
 		scene = new GameplayScreen();
 	}
 
 	private function renderBackbuffer() {
-		backbuffer.g2.begin(Color.Black);
-
+		backbuffer.g2.begin(Color.White);
 		scene.render(backbuffer.g2);
 
 		backbuffer.g2.end();

@@ -14,6 +14,10 @@ class GameplayScreen implements IScene {
 	private var playerSprite: AnimatedSprite;
 	private var inputHandler: InputHandler;
 
+	private var playerSpeed:Float;
+	private var deltaTime:Float;
+	private var totalTime:Float;
+
 	public function new() {
 		inputHandler = new InputHandler();
 		
@@ -26,6 +30,8 @@ class GameplayScreen implements IScene {
 			var sprH = 32;
 			
 			playerSprite = new AnimatedSprite(image, sprW, sprH);
+			playerSprite.animationRate = Manthoria.config.playerAnimationSpeed;
+			playerSpeed = Manthoria.config.playerMovementSpeed;
 
 			playerSprite.framesDown = [
 				new Rectangle(0, 0, sprW, sprH),
@@ -76,21 +82,32 @@ class GameplayScreen implements IScene {
 			return;
 		}
 
+		playerSprite.velocity.x = 0;
+		playerSprite.velocity.y = 0;
+
+		deltaTime = kha.Scheduler.time() - totalTime;
+		totalTime = kha.Scheduler.time();
+
 		if (inputHandler.up) {
-			playerSprite.position.y -= 1;
+			playerSprite.velocity.y -= 10;
 			playerSprite.changeDirection(Direction.UP);
 		} else if (inputHandler.down) {
-			playerSprite.position.y += 1;
+			playerSprite.velocity.y += 10;
 			playerSprite.changeDirection(Direction.DOWN);
 		}
 
 		if(inputHandler.left) {
-			playerSprite.position.x -= 1;
+			playerSprite.velocity.x -= 10;
 			playerSprite.changeDirection(Direction.LEFT);
 		} else if (inputHandler.right) {
-			playerSprite.position.x += 1;
+			playerSprite.velocity.x += 10;
 			playerSprite.changeDirection(Direction.RIGHT);
 		}
+
+		playerSprite.velocity.normalize();
+
+		playerSprite.position.x += playerSprite.velocity.x * deltaTime * playerSpeed;
+		playerSprite.position.y += playerSprite.velocity.y * deltaTime * playerSpeed;
 
 		if (playerSprite.position.x < 0) {
 			playerSprite.position.x = 0;
